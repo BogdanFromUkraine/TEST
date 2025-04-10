@@ -14,6 +14,7 @@ export default function Login() {
         password
       );
       const user = userCredential.user;
+      alert(console.log("Успішно увійшов"));
       return console.log(user);
     } catch (error) {
       alert(error.message);

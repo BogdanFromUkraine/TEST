@@ -68,7 +68,7 @@ function MyCalendar(props) {
   return (
     <div className="calendar-container">
       <h2>Обрана дата: {selectedDate.toDateString()}</h2>
-      <div class="max-w-4xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+      <div className="max-w-4xl mx-auto p-4 bg-white shadow-lg rounded-lg">
         <Calendar
           onChange={setSelectedDate}
           value={selectedDate}
