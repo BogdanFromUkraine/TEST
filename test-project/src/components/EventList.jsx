@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, updateCurrentUser } from "firebase/auth";
 import { auth, db } from "../firebase/config.js";
+import MyCalendar from "./MyCalendar.jsx";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -41,6 +42,7 @@ const EventList = () => {
           setEvents(list);
         };
         fetchData();
+        console.log(events);
       }
     });
 
@@ -98,6 +100,7 @@ const EventList = () => {
   return (
     <div>
       <ul>
+        {console.log(events)}
         {events.map((e) => (
           <li key={e.id}>
             {e.name} – {e.date} – {e.importance}
@@ -165,6 +168,7 @@ const EventList = () => {
           </div>
         </div>
       )}
+      <MyCalendar events={events} />
     </div>
   );
 };
