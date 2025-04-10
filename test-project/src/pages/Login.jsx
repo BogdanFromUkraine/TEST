@@ -1,22 +1,20 @@
 import { useState } from "react";
-// import {
-//   getAuth,
-//   signInWithEmailAndPassword,
-//   GoogleAuthProvider,
-//   signInWithPopup,
-// } from "firebase/auth";
-// import { useNavigate } from "react-router-dom";
-// import { auth } from "../firebase/config";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const navigate = useNavigate();
 
   const login = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = auth.currentUser;
+      return console.log(user);
     } catch (error) {
       alert(error.message);
     }
@@ -26,7 +24,6 @@ export default function Login() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate("/dashboard");
     } catch (error) {
       alert(error.message);
     }

@@ -1,17 +1,14 @@
 import { useState } from "react";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase/config";
-// import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/config";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const navigate = useNavigate();
 
   const register = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
     } catch (error) {
       alert(error.message);
     }
@@ -21,11 +18,13 @@ export default function Register() {
     <div>
       <h2>Реєстрація</h2>
       <input
+        id="email"
         type="email"
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
+        id="password"
         type="password"
         placeholder="Пароль"
         onChange={(e) => setPassword(e.target.value)}
