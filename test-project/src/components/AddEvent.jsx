@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../firebase/config.js";
+import { auth } from "../firebase/config.js";
+import { createEvent } from "../firebase/firebaseService.js";
 
 const AddEvent = () => {
   const [event, setEvent] = useState({
@@ -9,7 +9,7 @@ const AddEvent = () => {
     importance: "звичайна",
   });
 
-  const user = auth.currentUser; // отримую поточного користувача
+  const user = auth.currentUser;
 
   const handleChange = (e) => {
     setEvent({ ...event, [e.target.name]: e.target.value });
@@ -18,7 +18,7 @@ const AddEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "events"), {
+      await createEvent({
         ...event,
         createdAt: new Date(),
         userId: user.uid,

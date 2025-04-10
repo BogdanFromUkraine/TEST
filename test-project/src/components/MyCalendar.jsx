@@ -51,10 +51,14 @@ function MyCalendar(props) {
   }, {});
 
   function formatDate(date) {
-    // Отримаємо дату в форматі "YYYY-MM-DD"
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
-      .toISOString()
-      .split("T")[0];
+    const validDate = new Date(date);
+
+    if (isNaN(validDate.getTime())) {
+      console.error("Invalid date value: ", date);
+      return "";
+    }
+
+    return validDate.toLocaleDateString("en-GB");
   }
 
   const selectedDateStr = formatDate(selectedDate);

@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  where,
-  query,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-import { getAuth, onAuthStateChanged, updateCurrentUser } from "firebase/auth";
-import { auth, db } from "../firebase/config.js";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from "../firebase/config.js";
 import MyCalendar from "./MyCalendar.jsx";
+import {
+  getUserEvents,
+  deleteEvent,
+  updateEvent,
+} from "../firebase/firebaseService.js";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
@@ -29,15 +26,10 @@ const EventList = () => {
 
       if (user) {
         const fetchData = async () => {
-          const q = query(
-            collection(db, "events"),
-            where("userId", "==", user.uid)
-          );
-
-          const snapshot = await getDocs(q);
-          const list = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
+          const userEvents = await getUserEvents(user.uid);
+          const list = userEvents.map((u) => ({
+            id: u.id,
+            ...u,
           }));
           setEvents(list);
         };
@@ -51,7 +43,7 @@ const EventList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteDoc(doc(db, "events", id));
+      await deleteEvent(id);
       alert("Подію видалено!");
     } catch (err) {
       console.error("Помилка при видаленні:", err);
@@ -73,8 +65,7 @@ const EventList = () => {
     if (!editEvent) return;
 
     try {
-      const ref = doc(db, "events", editEvent.id);
-      await updateDoc(ref, {
+      await updateEvent(editEvent.id, {
         name: formData.name,
         date: formData.date,
         importance: formData.importance,
