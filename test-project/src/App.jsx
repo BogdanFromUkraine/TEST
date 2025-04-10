@@ -9,8 +9,8 @@ function App() {
   return (
     <>
       <AddEvent />
-      <Register />
-      <Login />
+      {/* <Register />
+      <Login /> */}
       <EventList />
     </>
   );

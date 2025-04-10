@@ -68,35 +68,35 @@ function MyCalendar(props) {
   return (
     <div className="calendar-container">
       <h2>Обрана дата: {selectedDate.toDateString()}</h2>
-
-      <Calendar
-        onChange={setSelectedDate}
-        value={selectedDate}
-        locale="uk-UA"
-        tileClassName={({ date }) => {
-          const d = formatDate(date);
-          return groupedEvents[d] ? "event-day" : null;
-        }}
-      />
-
-      <div className="events-list">
-        <h3>Події на {selectedDateStr}:</h3>
-        {todayEvents.length > 0 ? (
-          <ul>
-            {todayEvents.map((event) => (
-              <li key={event.id}>
-                <strong>{event.name}</strong> — {event.importance}
-                <br />
-                <small>
-                  Створено:{" "}
-                  {new Date(event.createdAt.seconds * 1000).toLocaleString()}
-                </small>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Подій немає</p>
-        )}
+      <div class="max-w-4xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+        <Calendar
+          onChange={setSelectedDate}
+          value={selectedDate}
+          locale="uk-UA"
+          tileClassName={({ date }) => {
+            const d = formatDate(date);
+            return groupedEvents[d] ? "event-day" : null;
+          }}
+        />
+        <div className="events-list">
+          <h3>Події на {selectedDateStr}:</h3>
+          {todayEvents.length > 0 ? (
+            <ul>
+              {todayEvents.map((event) => (
+                <li key={event.id}>
+                  <strong>{event.name}</strong> — {event.importance}
+                  <br />
+                  <small>
+                    Створено:{" "}
+                    {new Date(event.createdAt.seconds * 1000).toLocaleString()}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Подій немає</p>
+          )}
+        </div>
       </div>
     </div>
   );
