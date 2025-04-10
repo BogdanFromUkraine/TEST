@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, where, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  where,
+  query,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { getAuth, onAuthStateChanged, updateCurrentUser } from "firebase/auth";
 import { auth, db } from "../firebase/config.js";
 
@@ -32,11 +39,21 @@ const EventList = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "events", id));
+      alert("Подію видалено!");
+    } catch (err) {
+      console.error("Помилка при видаленні:", err);
+    }
+  };
+
   return (
     <ul>
       {events.map((e) => (
         <li key={e.id}>
           {e.name} – {e.date} – {e.importance}
+          <button onClick={() => handleDelete(e.id)}>Видалити</button>
         </li>
       ))}
     </ul>

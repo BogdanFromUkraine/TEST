@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AddEvent from "./components/AddEvent";
 import EventList from "./components/EventList";
+import RemoveEvent from "./components/RemoveEvent";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Register />
       <Login />
       <EventList />
+      <RemoveEvent />
     </>
   );
 }
